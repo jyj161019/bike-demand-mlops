@@ -1,0 +1,57 @@
+# 배포된 Render 서비스에 정상/잘못된 입력을 보내 검사하고, 결과를 저장소에 커밋한다.
+# 실행: 저장소 → Actions → smoke → Run workflow → 서비스 주소 입력
+name: smoke
+
+on:
+  workflow_dispatch:
+    inputs:
+      url:
+        description: "서비스 주소 (예: https://bike-demand-api.onrender.com)"
+        required: true
+      step:
+        description: "실행 기록에 남길 단계 이름"
+        required: false
+        default: "smoke"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repo-write
+  cancel-in-progress: false
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    env:
+      URL: ${{ inputs.url }}
+      STEP: ${{ inputs.step }}
+      RUN_PLACE: "GitHub Actions smoke #${{ github.run_number }}"
+      RUN_URL: "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 입력 검사
+        run: |
+          [[ "$URL" =~ ^https?://[A-Za-z0-9.:-]+/?$ ]] || { echo "주소 형식이 아닙니다: $URL"; exit 1; }
+          [[ "$STEP" =~ ^[A-Za-z0-9_-]{1,30}$ ]] || { echo "단계 이름은 영문·숫자·_- 만: $STEP"; exit 1; }
+
+      - name: 서비스 모델 버전 확인 (서비스 깨우기 포함)
+        run: |
+          MV="$(curl -s -m 100 "$URL/health" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("model_version","-"))' 2>/dev/null || echo -)"
+          echo "MODEL_VERSION=$MV" >> "$GITHUB_ENV"
+          echo "서비스 모델 버전: $MV"
+
+      - name: 검사
+        run: ./scripts/run_and_log.sh "$STEP" ./scripts/smoke_test.sh "$URL"
+
+      - name: 결과 커밋 (실패해도 기록은 남김)
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add logs || true
+          if git diff --cached --quiet; then echo "커밋할 변경 없음"; exit 0; fi
+          git commit -m "[$STEP] $URL (Actions #${{ github.run_number }}, ${{ job.status }})"
+          git pull --rebase origin main
+          git push origin HEAD:main

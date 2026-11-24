@@ -1,0 +1,11 @@
+.git
+.github
+data
+logs
+docs
+tests
+models/**/test_predictions.csv
+*.pem
+.env
+__pycache__
+.venv

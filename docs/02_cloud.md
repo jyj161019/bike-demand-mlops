@@ -45,18 +45,31 @@
 (시각, 단계, 성공 여부, 소요 시간, Git 커밋, 모델 버전, 실행 위치(Actions 실행 번호), 명령, 전체 출력 파일).
 각 출력 파일 첫 줄에는 Actions 실행 페이지 주소(`run_url`)가 있습니다.
 
-### 입력부터 결과까지 확인 (TODO: 직접 실행 후 붙여넣기)
+## 입력부터 결과까지 확인
 
-서비스 주소: TODO (https://....onrender.com)
+서비스 주소: https://bike-demand-api-uv3r.onrender.com (API 문서: `/docs`)
 
-브라우저 `https://<서비스 주소>/docs` 에서 보낸 요청과 응답:
+브라우저 `/docs` 에서 보낸 요청 (2026-11-24 19:19:30 KST):
+
+```json
+{"date": "2018-10-05", "hour": 18, "humidity": 55, "is_holiday": false,
+ "rainfall": 0, "snowfall": 0, "temperature": 17.5, "wind_speed": 1.8}
+```
+
+응답 (200):
+
+```json
+{"request_id": "e12f845e1b36", "predicted_rented_count": 2513,
+ "unit": "대/시간", "model_version": "v1"}
+```
+
+같은 요청이 Render 서버 로그에 남은 기록 (request_id 로 확인):
 
 ```
-TODO: 입력 JSON, 응답 JSON
+2026-11-24 10:19:30,382 INFO {"time": "2026-11-24T10:19:30+00:00", "path": "/predict", "status": 200, "input": {"date": "2018-10-05", "hour": 18, "temperature": 17.5, "humidity": 55.0, "wind_speed": 1.8, "rainfall": 0.0, "snowfall": 0.0, "is_holiday": false}, "request_id": "e12f845e1b36", "predicted_rented_count": 2513, "unit": "대/시간", "model_version": "v1", "elapsed_ms": 16.7}
 ```
 
-같은 요청이 Render Logs 에 남은 기록:
+브라우저 응답과 서버 로그의 request_id(`e12f845e1b36`)가 같아, 사용자 입력이 클라우드 서버의 v1 모델을 거쳐 결과로 돌아온 것을 확인했습니다. 처리 시간은 16.7ms입니다.
 
-```
-TODO: Render 대시보드 → Logs 에서 해당 줄 복사
-```
+![docs 화면](images/predict_docs.png)
+![Render 로그](images/predict_render_log.png)

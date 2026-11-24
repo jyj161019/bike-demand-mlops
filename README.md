@@ -12,7 +12,9 @@
 | [docs/05_cost_cleanup.md](docs/05_cost_cleanup.md) | 권한, 비용, 자원 정리 |
 | [logs/run_log.md](logs/run_log.md) | 단계별 실행 기록 (자동 생성) |
 
-서비스 주소: TODO (https://....onrender.com/docs)
+서비스 주소: https://bike-demand-api-uv3r.onrender.com (API 문서: [/docs](https://bike-demand-api-uv3r.onrender.com/docs))
+
+> 무료 인스턴스라 15분간 요청이 없으면 꺼집니다. 첫 요청은 50초 이상 걸릴 수 있습니다.
 
 ## 저장소 구성
 
@@ -85,6 +87,8 @@ Actions 러너는 실행할 때마다 새로 만들어지는 머신이라, 같�
 2. Render → 서비스 → **Manual Deploy → Clear build cache & deploy** (캐시 없이 새로 빌드)
 3. Actions → smoke → url 입력, step `rerun-smoke` → 실행
 
+**재실행 결과 (2026-11-24):** 새 러너에서 다시 학습한 `v1-rerun`(train #4)의 평가 결과가 v1과 완전히 같았고, 빌드 캐시를 지운 재배포 후 smoke #2도 PASS 11 / FAIL 0, 같은 입력에 같은 예측값이 나왔습니다. 자세한 내용은 [docs/03_evaluation.md](docs/03_evaluation.md#재실행-확인)에 있습니다.
+
 ### 6. 서비스할 모델 버전 바꾸기
 
 `render.yaml` 의 `MODEL_DIR` 을 `/work/models/<새 버전>` 으로 바꿔 커밋·푸시하면 자동으로 다시 배포됩니다.
@@ -135,4 +139,4 @@ MODEL_DIR=models/local-test LOG_DIR=logs/app uvicorn app.main:app --port 8000
 - 데이터: UCI Seoul Bike Sharing Demand (CC BY 4.0) — [data/raw/README.md](data/raw/README.md)
 - 문서: scikit-learn `HistGradientBoostingRegressor`, FastAPI, Pydantic, GitHub Actions, Render Blueprint
 - 직접 구현: 이 저장소의 코드·워크플로·스크립트 전체 (데이터 처리, 기준 방법, 학습·평가, API, 검사, 실행 기록)
-- AI 도구 사용: TODO (수업 규정에 따라 사용 범위 작성)
+- AI 도구 사용: Claude(Anthropic)를 코드·문서 초안 작성과 오류 원인 확인에 참고했습니다. 클라우드 설정, 실행, 결과 확인, 오류 재현·수정, 기록은 직접 수행했습니다.

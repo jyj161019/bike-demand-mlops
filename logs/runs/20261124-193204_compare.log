@@ -1,0 +1,30 @@
+# step=compare time=2026-11-24 19:32:04 host=GitHub Actions train #4 commit=0b1da7c model_version=v1-rerun
+# cmd=python -m src.compare v1 v1-rerun
+# run_url=https://github.com/jyj161019/bike-demand-mlops/actions/runs/45375594544
+
+항목                                                      v1     v1-rerun
+groups.공휴일.baseline_MAE                              373.9        373.9
+groups.공휴일.model_MAE                                216.34       216.34
+groups.공휴일.rows                                         96           96
+groups.비 안 옴 (rainfall=0).baseline_MAE              348.09       348.09
+groups.비 안 옴 (rainfall=0).model_MAE                 220.53       220.53
+groups.비 안 옴 (rainfall=0).rows                        1850         1850
+groups.비 옴 (rainfall>0).baseline_MAE                507.33       507.33
+groups.비 옴 (rainfall>0).model_MAE                   116.94       116.94
+groups.비 옴 (rainfall>0).rows                            87           87
+groups.심야 (0-5시).baseline_MAE                       115.09       115.09
+groups.심야 (0-5시).model_MAE                           85.19        85.19
+groups.심야 (0-5시).rows                                  480          480
+groups.출퇴근 (7-9시, 17-19시).baseline_MAE              538.99       538.99
+groups.출퇴근 (7-9시, 17-19시).model_MAE                 350.19       350.19
+groups.출퇴근 (7-9시, 17-19시).rows                         486          486
+overall.baseline.MAE                                355.24       355.24
+overall.baseline.R2                                 0.3989       0.3989
+overall.baseline.RMSE                               478.68       478.68
+overall.model.MAE                                   215.88       215.88
+overall.model.R2                                    0.7661       0.7661
+overall.model.RMSE                                  298.56       298.56
+
+결과: 평가 결과가 모두 같습니다 (재현됨).
+
+# result=성공 duration=0s

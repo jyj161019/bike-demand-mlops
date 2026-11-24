@@ -1,0 +1,47 @@
+{
+  "model_version": "v1-rerun",
+  "created_at_utc": "2026-11-24T10:32:04+00:00",
+  "git_commit": "0b1da7c",
+  "data_file": "data/raw/SeoulBikeData.csv",
+  "data_sha256": "373339b71a8935d69e9af0abf26a70744632119862eeb3919efb389a7b749c60",
+  "features": [
+    "hour",
+    "temperature",
+    "humidity",
+    "wind_speed",
+    "rainfall",
+    "snowfall",
+    "is_holiday",
+    "month",
+    "weekday",
+    "is_weekend"
+  ],
+  "target": "rented_count",
+  "target_unit": "대/시간",
+  "model": "HistGradientBoostingRegressor",
+  "model_params": {
+    "loss": "poisson",
+    "max_iter": 300,
+    "learning_rate": 0.05,
+    "random_state": 42
+  },
+  "split": {
+    "method": "time-based",
+    "train_period": "2017-12-01 ~ 2018-08-31",
+    "test_period": "2018-09-01 ~ 2018-11-30",
+    "train_rows": 6528,
+    "test_rows": 1937
+  },
+  "data_check": {
+    "rows_raw": 8760,
+    "missing_values": 0,
+    "duplicate_rows": 0,
+    "rows_non_functioning_day": 295,
+    "date_min": "2017-12-01",
+    "date_max": "2018-11-30",
+    "rows_used": 8465
+  },
+  "python": "3.11.18",
+  "scikit_learn": "1.5.2",
+  "pandas": "2.2.3"
+}

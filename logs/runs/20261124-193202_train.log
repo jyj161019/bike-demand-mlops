@@ -1,0 +1,20 @@
+# step=train time=2026-11-24 19:32:02 host=GitHub Actions train #4 commit=0b1da7c model_version=v1-rerun
+# cmd=python -m src.train --data data/raw/SeoulBikeData.csv --version v1-rerun
+# run_url=https://github.com/jyj161019/bike-demand-mlops/actions/runs/45375594544
+
+{
+  "model_version": "v1-rerun",
+  "out_dir": "models/v1-rerun",
+  "baseline": {
+    "MAE": 355.24,
+    "RMSE": 478.68,
+    "R2": 0.3989
+  },
+  "model": {
+    "MAE": 215.88,
+    "RMSE": 298.56,
+    "R2": 0.7661
+  }
+}
+
+# result=성공 duration=2s

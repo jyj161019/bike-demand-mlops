@@ -1,0 +1,41 @@
+{
+  "overall": {
+    "baseline": {
+      "MAE": 355.24,
+      "RMSE": 478.68,
+      "R2": 0.3989
+    },
+    "model": {
+      "MAE": 215.88,
+      "RMSE": 298.56,
+      "R2": 0.7661
+    }
+  },
+  "groups": {
+    "비 안 옴 (rainfall=0)": {
+      "rows": 1850,
+      "baseline_MAE": 348.09,
+      "model_MAE": 220.53
+    },
+    "비 옴 (rainfall>0)": {
+      "rows": 87,
+      "baseline_MAE": 507.33,
+      "model_MAE": 116.94
+    },
+    "출퇴근 (7-9시, 17-19시)": {
+      "rows": 486,
+      "baseline_MAE": 538.99,
+      "model_MAE": 350.19
+    },
+    "심야 (0-5시)": {
+      "rows": 480,
+      "baseline_MAE": 115.09,
+      "model_MAE": 85.19
+    },
+    "공휴일": {
+      "rows": 96,
+      "baseline_MAE": 373.9,
+      "model_MAE": 216.34
+    }
+  }
+}

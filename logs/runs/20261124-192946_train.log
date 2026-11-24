@@ -1,0 +1,7 @@
+# step=train time=2026-11-24 19:29:46 host=GitHub Actions train #3 commit=606ee96 model_version=v1
+# cmd=python -m src.train --data data/raw/SeoulBikeData.csv --version v1
+# run_url=https://github.com/jyj161019/bike-demand-mlops/actions/runs/45375254837
+
+이미 있는 버전입니다: models/v1  (--version 을 바꿔 주세요)
+
+# result=실패(exit 1) duration=1s

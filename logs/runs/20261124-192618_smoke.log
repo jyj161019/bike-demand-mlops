@@ -1,0 +1,26 @@
+# step=smoke time=2026-11-24 19:26:18 host=GitHub Actions smoke #1 commit=46e632b model_version=v1
+# cmd=./scripts/smoke_test.sh https://bike-demand-api-uv3r.onrender.com
+# run_url=https://github.com/jyj161019/bike-demand-mlops/actions/runs/45374774298
+
+== 서비스 응답 대기: https://bike-demand-api-uv3r.onrender.com/health
+응답 코드 200, 대기 1초
+== https://bike-demand-api-uv3r.onrender.com/health
+{"status":"ok","model_version":"v1"}
+== https://bike-demand-api-uv3r.onrender.com/model
+{"model_version":"v1","git_commit":"f18db3a","data_sha256":"373339b71a8935d69e9af0abf26a70744632119862eeb3919efb389a7b749c60","features":["hour","temperature","humidity","wind_speed","rainfall","snowfall","is_holiday","month","weekday","is_weekend"],"target_unit":"대/시간","scikit_learn":"1.5.2"}
+
+[PASS] ok_01_weekday_evening.json  (기대 200, 실제 200)  입력={"date": "2018-10-05", "hour": 18, "temperature": 17.5, "humidity": 55, "wind_speed": 1.8, "rainfall": 0, "snowfall": 0, "is_holiday": false}  응답={"request_id":"95e216aea76e","predicted_rented_count":2513,"unit":"대/시간","model_version":"v1"}
+[PASS] ok_02_rainy_morning.json  (기대 200, 실제 200)  입력={"date": "2018-09-12", "hour": 8, "temperature": 21.0, "humidity": 95, "wind_speed": 2.5, "rainfall": 6.5, "snowfall": 0, "is_holiday": false}  응답={"request_id":"2aefcb38b8b2","predicted_rented_count":117,"unit":"대/시간","model_version":"v1"}
+[PASS] ok_03_winter_night.json  (기대 200, 실제 200)  입력={"date": "2018-11-28", "hour": 3, "temperature": -4.0, "humidity": 40, "wind_speed": 1.0, "rainfall": 0, "snowfall": 0, "is_holiday": false}  응답={"request_id":"232dda3d13e8","predicted_rented_count":87,"unit":"대/시간","model_version":"v1"}
+[PASS] ok_04_holiday_afternoon.json  (기대 200, 실제 200)  입력={"date": "2018-10-03", "hour": 15, "temperature": 20.0, "humidity": 45, "wind_speed": 2.0, "rainfall": 0, "snowfall": 0, "is_holiday": true}  응답={"request_id":"0d2957d183de","predicted_rented_count":968,"unit":"대/시간","model_version":"v1"}
+[PASS] bad_01_missing_hour.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "temperature": 17.5, "humidity": 55, "wind_speed": 1.8}  응답={"error":"잘못된 입력","details":[{"field":"hour","message":"Field required"}]}
+[PASS] bad_02_hour_out_of_range.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "hour": 25, "temperature": 17.5, "humidity": 55, "wind_speed": 1.8}  응답={"error":"잘못된 입력","details":[{"field":"hour","message":"Input should be less than or equal to 23"}]}
+[PASS] bad_03_humidity_over_100.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "hour": 18, "temperature": 17.5, "humidity": 150, "wind_speed": 1.8}  응답={"error":"잘못된 입력","details":[{"field":"humidity","message":"Input should be less than or equal to 100"}]}
+[PASS] bad_04_negative_rain.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "hour": 18, "temperature": 17.5, "humidity": 55, "wind_speed": 1.8, "rainfall": -3}  응답={"error":"잘못된 입력","details":[{"field":"rainfall","message":"Input should be greater than or equal to 0"}]}
+[PASS] bad_05_wrong_date_format.json  (기대 422, 실제 422)  입력={"date": "05/10/2018", "hour": 18, "temperature": 17.5, "humidity": 55, "wind_speed": 1.8}  응답={"error":"잘못된 입력","details":[{"field":"date","message":"Input should be a valid date or datetime, invalid character in year"}]}
+[PASS] bad_06_text_temperature.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "hour": 18, "temperature": "warm", "humidity": 55, "wind_speed": 1.8}  응답={"error":"잘못된 입력","details":[{"field":"temperature","message":"Input should be a valid number, unable to parse string as a number"}]}
+[PASS] bad_07_unknown_field.json  (기대 422, 실제 422)  입력={"date": "2018-10-05", "hour": 18, "temperature": 17.5, "humidity": 55, "wind_speed": 1.8, "temprature": 10}  응답={"error":"잘못된 입력","details":[{"field":"temprature","message":"Extra inputs are not permitted"}]}
+
+합계: PASS 11 / FAIL 0
+
+# result=성공 duration=6s
